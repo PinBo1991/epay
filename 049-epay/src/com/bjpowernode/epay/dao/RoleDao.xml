@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.epay.dao.RoleDao">
+	
+	<insert id="save">
+		insert into tbl_role(id,code,name,remark,createTime) values(#{id},#{code},#{name},#{remark},#{createTime})
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			select sys_guid() from dual
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteById">
+		delete from tbl_role where id = #{id}
+	</delete>
+	
+	<select id="getById" resultType="Role">
+		select * from  tbl_role where id = #{id}
+	</select>
+	
+	<update id="update">
+		update 
+			tbl_role 
+		set
+			code = #{code},
+			name = #{name},
+			remark = #{remark},
+			editTime = #{editTime}
+		where 
+			id = #{id}
+	</update>
+	
+	<select id="getRolesByPage" resultType="Role">
+		select 
+			tt.*
+		from
+			(select 
+				t.*,rownum as linenum
+			from
+				(select * from tbl_role where code!='000' order by code) t
+			where 
+				rownum &lt;=#{0}*#{1})tt
+		where
+			linenum &gt;(#{0}-1)*#{1}
+	</select>
+	
+	<select id="getTotal" resultType="Long">
+		select count(*) from tbl_role where code!='000'
+	</select>
+</mapper>
+

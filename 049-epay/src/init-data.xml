@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sys-data>
+	<!-- 用户信息 -->
+	<user-info>
+		<user login-account="admin" lockStatus="1" name="系统管理员" password="21232f297a57a5a743894a0e4a801fc3"/>
+	</user-info>
+	
+	<!-- 角色信息 -->
+	<role-info>
+		<role code="000" name="全局管理"/>
+	</role-info>
+	
+	<!-- 许可信息 -->
+	<permission-info>
+		<permission code="000" name="互联网支付后台管理系统" order-no="1" operation-url="main/main.do,main/changepwd.do,main/login.do,main/logout.do">
+			<permission code="001001" name="权限管理" order-no="2" operation-url="permission/makeMenuTree.do">
+				<permission code="001001001" name="许可维护" order-no="1" operation-url="permission/index.do,permission/tree.do,permission/makePermissionTree.do,permission/workarea.do,permission/detail.do" module-url="permission/index.do">
+					<permission code="001001001001" name="新增许可" order-no="1" operation-url="permission/add.do,permission/save.do,permission/getByCode.do,permission/getByNameAndPid.do"/>
+					<permission code="001001001002" name="修改许可" order-no="2" operation-url="permission/edit.do,permission/update.do"/>
+					<permission code="001001001003" name="删除许可" order-no="3" operation-url="permission/delete.do"/>
+				</permission>
+				<permission code="001001002" name="角色维护" order-no="2" operation-url="role/index.do,role/list.do,role/getByPage.do" module-url="role/index.do">
+					<permission code="001001002001" name="新增角色" order-no="1" operation-url="role/add.do,role/save.do"/>
+					<permission code="001001002002" name="修改角色" order-no="2" operation-url="role/edit.do,role/update.do"/>
+					<permission code="001001002003" name="删除角色" order-no="3" operation-url="role/delete.do"/>
+					<permission code="001001002004" name="查看明细" order-no="4" operation-url="role/detail.do,permission/makeDetailTree.do"/>				
+					<permission code="001001002005" name="分配许可" order-no="5" operation-url="role/assign.do,permission/makeCheckboxTree.do,rolePermissionRelation/assign.do"/>				
+				</permission>
+				<permission code="001001003" name="用户维护" order-no="3" operation-url="user/index.do,user/list.do,user/getByPage.do" module-url="user/index.do">
+					<permission code="001001003001" name="新增用户" order-no="1" operation-url="user/add.do,user/save.do"/>
+					<permission code="001001003002" name="修改用户" order-no="2" operation-url="user/edit.do,user/update.do"/>
+					<permission code="001001003003" name="删除用户" order-no="3" operation-url="user/delete.do"/>
+					<permission code="001001003004" name="查询明细" order-no="4" operation-url="user/detail.do,permission/makeFinalTree.do"/>	
+					<permission code="001001003005" name="分配角色" order-no="5" operation-url="user/assign.do,userRoleRelation/assign.do"/>
+				</permission>
+			</permission>		
+		</permission>										
+	</permission-info>
+</sys-data>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjpowernode.epay.dao.PermissionDao">
+	<insert id="save">
+		insert into 
+			tbl_permission(id,code,name,moduleUrl,operationUrl,orderNo,createTime,pid)
+		values(#{id},#{code},#{name},#{moduleUrl},#{operationUrl},#{orderNo},#{createTime},#{pid})
+		
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			select sys_guid() from dual
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteById">
+		delete from tbl_permission where id= #{id}
+	</delete>
+	
+	<select id="getById" resultType="Permission">
+		select * from tbl_permission where id = #{id}
+	</select>
+	
+	<update id="update">
+		update 
+			tbl_permission
+		set
+			code = #{code},
+			name = #{name},
+			moduleUrl = #{moduleUrl},
+			operationUrl = #{operationUrl},
+			orderNo = #{orderNo},
+			editTime = #{editTime}
+		where 
+			id= #{id}
+	</update>
+	
+	<select id="getAll" resultType="Permission">
+		select * from tbl_permission
+	</select>
+	
+	<select id="getByCode" resultType="Permission">
+		select * from tbl_permission where code = #{code}
+	</select>
+	
+	<select id="getByNameAndPid" resultType="Permission">
+		select * from tbl_permission where name = #{0} and pid = #{1}
+	</select>
+	
+	<resultMap type="Permission" id="permissionMap">
+		<id column="id" property="id"/>
+		<result column="pid" property="pid"/>
+		<result column="name" property="name"/>
+		<collection property="childNodes" select="selectChildNodes"  column="id">
+			<id column="id" property="id"/>
+			<result column="pid" property="pid"/>
+			<result column="name" property="name"/>
+		</collection>
+	</resultMap>
+	
+	<select id="selectChildNodes" resultType="Permission">
+		select * from tbl_permission where pid = #{id}
+	</select>
+	
+	<select id="getPermissionsByUserId" resultMap="permissionMap">
+		 select 
+		 	*
+	     from 
+	     	tbl_permission
+	     where 
+	     	id in (select 
+	     				permission_id
+	               from 
+	               		tbl_role_permission_relation
+	               where 
+	               		role_id in
+	                           (select role_id
+	                              from tbl_user_role_relation
+	                             where user_id = #{userId}))
+	</select>
+</mapper>
+
